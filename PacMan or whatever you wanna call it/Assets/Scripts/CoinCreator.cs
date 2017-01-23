@@ -8,8 +8,8 @@ public class CoinCreator : MonoBehaviour {
 	void Start () {
 		
 		//Vector3 rotation = new Vector3 (90.0f, 90.0f, 45.0f);
-		for (int i = 0; i < 20; i++) {
-			Vector3 pos = new Vector3 (Random.Range (-24f, 24f), 0.6f, Random.Range (-24f, 24f));
+		for (int i = 0; i <= 20; i++) {
+			Vector3 pos = new Vector3 (Random.Range (-7f, 7f), 0.6f, Random.Range (-14f, 14f));
 			Rigidbody coinClone = (Rigidbody)Instantiate (coin, pos, transform.rotation);
 		}
 	}	

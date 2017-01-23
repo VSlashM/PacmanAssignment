@@ -7,26 +7,44 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public Rigidbody pacman;
 	public int score;
+	public int lives;
 	public Text scoreDisplay;
+	public Text livesDisplay;
+	public Vector3 startingPosition;
+	public Vector3 topLeftTeleport;
+	public Vector3 topRightTeleport;
+	public Vector3 bottomLeftTeleport;
+	public Vector3 bottomRightTeleport;
 
     // Use this for initialization
     void Start() {
         pacman = GetComponent<Rigidbody>();
+		startingPosition = pacman.transform.position; 
 		score = 0;
+		lives = 5;
+		topLeftTeleport = new Vector3 (-10f, 0.75f, 14f);
+		topRightTeleport = new Vector3 (10f, 0.75f, 14f);
+		bottomLeftTeleport = new Vector3 (-10f, 0.75f, -14f);
+		bottomRightTeleport = new Vector3 (10f, 0.75f, -14f);
 		scoreDisplay.text = "Score: " + score;
+		livesDisplay.text = "Lives: " + lives;
+
     }
 
     void FixedUpdate() {
        float moveVertical = Input.GetAxis("Vertical");
        float moveHorizontal = Input.GetAxis("Horizontal");
-
-       Vector3 move = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		Vector3 teleport = new Vector3 (23f, 0.75f, 23f);
-		Vector3 reset = new Vector3 (-24.0f, 0.75f, -24.0f);
-		if (pacman.transform.position.x <= 25f && pacman.transform.position.x >= 24f &&  pacman.transform.position.z <= 25f && pacman.transform.position.z >= 24f) {
-			pacman.MovePosition(reset);
+		if (pacman.transform.position.x > 9f && pacman.transform.position.z > 14.9) {
+			pacman.MovePosition (bottomRightTeleport);
+		}else if (pacman.transform.position.x < -9f && pacman.transform.position.z > 14.9) {
+			pacman.MovePosition (bottomLeftTeleport);
+		}else if (pacman.transform.position.x > 9f && pacman.transform.position.z < -14.9) {
+			pacman.MovePosition (topRightTeleport);
+		}else if (pacman.transform.position.x < -9f && pacman.transform.position.z < -14.9) {
+			pacman.MovePosition (topLeftTeleport);
 		}
-       pacman.AddForce(move * speed);
+       Vector3 move = new Vector3(moveHorizontal, 0.0f, moveVertical);
+	       pacman.AddForce(move * speed);
     }
 
 	void OnTriggerEnter(Collider other){
@@ -34,6 +52,11 @@ public class PlayerController : MonoBehaviour {
 			other.gameObject.SetActive(false);
 			score++;
 			scoreDisplay.text = "Score: " + score;
+		}
+		if(other.gameObject.CompareTag("Ghost")){
+			pacman.MovePosition(startingPosition);
+			lives--;
+			livesDisplay.text = "Lives: " + lives;
 		}
 	}
 }
