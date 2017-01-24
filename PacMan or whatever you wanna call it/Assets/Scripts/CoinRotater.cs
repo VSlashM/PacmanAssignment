@@ -6,7 +6,7 @@ public class CoinRotater : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Vector3 rotation = new Vector3 (0, 0, 10);
+		Vector3 rotation = new Vector3 (10, 0, 0);
 		transform.Rotate (rotation);
 	}
 }
