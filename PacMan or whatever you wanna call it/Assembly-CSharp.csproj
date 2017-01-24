@@ -46,7 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ApplicationController.cs" />
      <Compile Include="Assets\Scripts\CoinCreator.cs" />
      <Compile Include="Assets\Scripts\CoinRotater.cs" />
      <Compile Include="Assets\Scripts\GhostController.cs" />
